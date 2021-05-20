@@ -1,0 +1,199 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Update User</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="closeModal()">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <form  [formGroup]="Form" (ngSubmit)="Update()">
+    <ion-item >
+      <ion-label position = "floating">Name:</ion-label>
+      <ion-input formControlName="Name"></ion-input>
+    
+     
+    
+    </ion-item>
+    <div style="color: red;margin-left: 1rem;">
+    <ng-container *ngFor="let x of ErrorMessages.Name">
+      <div
+        
+        *ngIf="Form.get('Name').hasError(x.type) && (Form.get('Name').dirty || Form.get('Name').touched)"> {{ x.message }}
+      </div>
+    </ng-container>
+    </div>
+    
+    
+    <ion-item  >
+      <ion-label position="floating">Surname:</ion-label>
+      <ion-input formControlName="Surname" ></ion-input>
+     
+    </ion-item>
+    
+    <div style="color: red;margin-left: 1rem;">
+      <ng-container *ngFor="let x of ErrorMessages.Surname">
+        <div
+          
+          *ngIf="Form.get('Surname').hasError(x.type) && (Form.get('Surname').dirty || Form.get('Surname').touched)"> {{ x.message }}
+        </div>
+      </ng-container>
+      </div>
+    
+    <ion-item >
+      <ion-label position = "floating">Email:</ion-label>
+      <ion-input formControlName="Email" ></ion-input>
+     
+    </ion-item>
+    
+    <div style="color: red;margin-left: 1rem;">
+      <ng-container *ngFor="let x of ErrorMessages.Email">
+        <div
+          
+          *ngIf="Form.get('Email').hasError(x.type) && (Form.get('Email').dirty || Form.get('Email').touched)"> {{ x.message }}
+        </div>
+      </ng-container>
+      </div>
+    
+    
+    <ion-item  >
+    <ion-select formControlName="Title"  placeholder="Title" >
+      <ion-select-option value="Mr">Mr</ion-select-option>
+      <ion-select-option value="Mrs">Mrs</ion-select-option>
+      <ion-select-option value="Miss">Miss</ion-select-option>
+      <ion-select-option value="Ms">Ms</ion-select-option>
+    </ion-select>
+    
+    </ion-item>
+    
+    <div style="color: red;margin-left: 1rem;">
+      <ng-container *ngFor="let x of ErrorMessages.Title">
+        <div
+          
+          *ngIf="Form.get('Title').hasError(x.type) && (Form.get('Title').dirty || Form.get('Title').touched)"> {{ x.message }}
+        </div>
+      </ng-container>
+      </div>
+    
+    <ion-item  >
+    <ion-select formControlName="Role"  placeholder="Role" >
+      <ion-select-option value="Admin">Admin</ion-select-option>
+      <ion-select-option value="User">User</ion-select-option>
+    </ion-select>
+    
+    </ion-item>
+    
+    <div style="color: red;margin-left: 1rem;">
+      <ng-container *ngFor="let x of ErrorMessages.Role">
+        <div
+          
+          *ngIf="Form.get('Role').hasError(x.type) && (Form.get('Role').dirty || Form.get('Role').touched)"> {{ x.message }}
+        </div>
+      </ng-container>
+      </div>
+    
+    <ion-item >
+      <ion-label  position = "floating">Password:</ion-label>
+      <ion-input type="password" formControlName="Password" #Password ></ion-input>
+      
+    </ion-item>
+    
+    <div style="color: red;margin-left: 1rem;">
+      <ng-container *ngFor="let x of ErrorMessages.Password">
+        <div
+          
+          *ngIf="Form.get('Password').hasError(x.type) && (Form.get('Password').dirty || Form.get('Password').touched)"> {{ x.message }}
+        </div>
+      </ng-container>
+      </div>
+    
+    
+      <ion-item >
+        <ion-label position = "floating" >Confirm password:</ion-label> 
+        <ion-input type="Password"  formControlName="Confirm" #Confirm   required ></ion-input>
+        
+      </ion-item>
+      <span style="color: red;;margin-left: 1rem;" class="help-block" *ngIf=" Confirm.value != '' && Confirm.value != Password.value  ">password does not match</span>
+      <div style="color: red;margin-left: 1rem;">
+        <ng-container *ngFor="let x of ErrorMessages.Confirm">
+         
+          <div
+         
+            *ngIf="Form.get('Confirm').hasError(x.type) && (Form.get('Confirm').dirty || Form.get('Confirm').touched)"> {{ x.message }} 
+          </div>
+        </ng-container>
+        </div>
+        
+     
+    
+    <ion-button type="submit" color="primary"  [disabled]="!Form.valid || Confirm.value != Password.value"  expand="full">Submit</ion-button>
+    
+    </form>
+    
+    
+</ion-content>
+
+<!-- <form #userform="ngForm">
+  <ion-item class="form-group" [class.has-error]="namecontrol.invalid && namecontrol.touched">
+    <ion-label positon = "fixed">Name:</ion-label>
+    <ion-input name="name" #namecontrol="ngModel" required [(ngModel)]="user.Name"></ion-input>
+  <span style="color: red;font-size: small;" class="help-block" *ngIf=" namecontrol.invalid && namecontrol.touched   "  >name is required</span>
+  </ion-item>
+  
+  <ion-item  class="form-group" [class.has-error]="surnamecontrol.invalid && surnamecontrol.touched">
+    <ion-label positon = "fixed">Surname:</ion-label>
+    <ion-input name="surname" #surnamecontrol="ngModel" required [(ngModel)]="user.Surname"></ion-input>
+    <span style="color: red;font-size: small;" class="help-block" *ngIf="surnamecontrol.invalid && surnamecontrol.touched ">surname is required</span>
+  </ion-item>
+  
+  <ion-item  class="form-group" [class.has-error]="emailcontrol.invalid && emailcontrol.touched">
+    <ion-label positon = "fixed">Email:</ion-label>
+    <ion-input name="email" #emailcontrol="ngModel" required email required [(ngModel)]="user.Email"></ion-input>
+    <span style="color: red;font-size: small;" class="help-block" *ngIf="emailcontrol.errors?.required && emailcontrol.touched ">email is required</span>
+    <span style="color: red;font-size: small;" class="help-block" *ngIf=" emailcontrol.errors?.email && emailcontrol.touched ">email is invalid</span>
+  </ion-item>
+  
+  
+  <ion-item  class="form-group" [class.has-error]="titlecontrol.invalid && titlecontrol.touched">
+  <ion-select name="title"  #titlecontrol="ngModel" required [(ngModel)]="user.Title" placeholder="Title">
+    <ion-select-option value="Mr">Mr</ion-select-option>
+    <ion-select-option value="Mrs">Mrs</ion-select-option>
+    <ion-select-option value="Miss">Miss</ion-select-option>
+    <ion-select-option value="Dr">Dr</ion-select-option>
+  </ion-select>
+  <span style="color: red;font-size: small;margin-left: 12.4rem;" class="help-block" *ngIf="titlecontrol.invalid && titlecontrol.touched ">title is required</span>
+  </ion-item>
+  
+  <ion-item  class="form-group" [class.has-error]="rolecontrol.invalid && rolecontrol.touched">
+  <ion-select name="role" #rolecontrol="ngModel" required [(ngModel)]="user.Role" placeholder="Role">
+    <ion-select-option value="Admin">Admin</ion-select-option>
+    <ion-select-option value="User">User</ion-select-option>
+  </ion-select>
+  <span style="color: red;font-size: small;margin-left: 12.4rem;" class="help-block" *ngIf="rolecontrol.invalid && rolecontrol.touched ">role is required</span>
+  </ion-item>
+  
+  <ion-item  class="form-group" [class.has-error]="passwordcontrol.invalid && passwordcontrol.touched">
+    <ion-label positon = "fixed">Password:</ion-label>
+    <ion-input type="Password" #passwordcontrol="ngModel" name="password" required [(ngModel)]="user.Password"></ion-input>
+    <span style="color: red;font-size: small;" class="help-block" *ngIf="passwordcontrol.invalid && passwordcontrol.touched ">password is required</span>
+  </ion-item>
+  
+  <ion-item  class="form-group" [class.has-error]="confirm.invalid && confirm.touched">
+    <ion-label positon = "fixed">Confirm Password:</ion-label> 
+    <ion-input type="Password" #confirm="ngModel" name="confirmpassword"  [(ngModel)]="Repeatpassword" required ></ion-input>
+    <span style="color: red;font-size: small;" class="help-block" *ngIf="confirm.invalid && confirm.touched ">password is required</span>
+    <span style="color: red;font-size: small;" class="help-block" *ngIf="confirm.valid && confirm.value != passwordcontrol.value ">password does not match</span>
+  </ion-item>
+  
+  <ion-button expand="full" id="z" [disabled]="userform.invalid || confirm.value != passwordcontrol.value" (click)="Update()">Save User</ion-button>
+  
+
+  
+
+
+
+
+</form> -->
